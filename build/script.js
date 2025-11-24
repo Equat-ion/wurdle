@@ -20,6 +20,9 @@ function initBoard() {
         for (let j = 0; j < 5; j++) {
             let box = document.createElement("div")
             box.className = "letterBox"
+            box.classList.add(
+                
+            )
 
             row.appendChild(box)
         }
