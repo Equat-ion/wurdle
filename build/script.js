@@ -134,18 +134,16 @@ function shadeKeyboard(letter, color) {
             
             let oldColor = element.getAttribute('data-color');
             
-            // Priority: green > yellow > grey
-            // If already green, never override
             if (oldColor === 'green') {
                 return;
             }
             
-            // If already yellow, only override with green
+
             if (oldColor === 'yellow' && color !== 'green') {
                 return;
             }
             
-            // If trying to set grey but already have yellow or green, skip
+
             if (color === 'grey' && (oldColor === 'yellow' || oldColor === 'green')) {
                 return;
             }
@@ -185,29 +183,16 @@ document.addEventListener("keyup", (e) => {
   }
 });
 
-document.querySelectorAll(".keyboard-button").forEach(button => {
-  button.addEventListener("click", (e) => {
-    if (guessesRemaining === 0) {
-      return;
+document.getElementById("keyboard-cont").addEventListener("click", (e) => {
+    const target = e.target
+    if (!target.classList.contains("keyboard-button")) {
+        return
+    }
+    let key = target.textContent
+
+    if (key === "Del") {
+        key = "Backspace"
     }
 
-    let pressedKey = e.target.textContent;
-
-    if (pressedKey === "Del" && nextLetter !== 0) {
-      deleteLetter();
-      return;
-    }
-
-    if (pressedKey === "Enter") {
-      checkGuess();
-      return;
-    }
-
-    let found = pressedKey.match(/[a-z]/gi);
-    if (!found || found.length > 1) {
-      return;
-    } else {
-      insertLetter(pressedKey);
-    }
-  });
-});
+    document.dispatchEvent(new KeyboardEvent("keyup", {'key':key}))
+})
