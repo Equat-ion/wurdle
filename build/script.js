@@ -7,7 +7,7 @@ let nextLetter = 0;
 
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
-console.log(rightGuessString);
+
 
 function initBoard() {
   let board = document.getElementById("gameBoard");
@@ -74,33 +74,37 @@ function checkGuess() {
     return;
   }
 
+  let guessColors = new Array(5).fill("grey");
+
+  // First pass: Check for Green
   for (let i = 0; i < 5; i++) {
-    let letterColor = "";
-    let box = row.children[i];
-    let letter = currentGuess[i]; 
-
-    if (currentGuess[i] === rightGuessString[i]) { 
-        letterColor = "green";
-        rightGuess[i] = "#"; 
-        
-    } else if (!rightGuess.includes(currentGuess[i])) { 
-        letterColor = "grey";
-        
-    // 3. CHECK FOR YELLOW (Letter is present, but NOT in this position)
-    // The letter must be present in the (partially masked) rightGuess array
-    } else {
-        letterColor = "yellow";
-        // Find the letter's position in the rightGuess array and mask it
-        rightGuess[rightGuess.indexOf(currentGuess[i])] = "#";
+    if (currentGuess[i] === rightGuessString[i]) {
+      guessColors[i] = "green";
+      rightGuess[i] = "#";
     }
+  }
 
-    // Apply delay and color
+  // Second pass: Check for Yellow
+  for (let i = 0; i < 5; i++) {
+    if (guessColors[i] === "green") continue;
+
+    let letter = currentGuess[i];
+    let index = rightGuess.indexOf(letter);
+
+    if (index !== -1) {
+      guessColors[i] = "yellow";
+      rightGuess[index] = "#";
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    let box = row.children[i];
     let delay = 250 * i;
     setTimeout(() => {
-        box.style.backgroundColor = letterColor;
-        shadeKeyboard(currentGuess[i], letterColor);
+      box.style.backgroundColor = guessColors[i];
+      shadeKeyboard(currentGuess[i], guessColors[i]);
     }, delay);
-}
+  }
   
   if (guessString === rightGuessString) {
     setTimeout(() => {
@@ -123,20 +127,33 @@ function checkGuess() {
 }
 
 function shadeKeyboard(letter, color) {
-  for (const element of document.getElementsByClassName("keyboard-button")) {
-    if (element.textContent === letter) {
-      let oldColor = element.style.backgroundColor;
-      if (oldColor === "green") {
-        return;
-      }
-      if (oldColor === "yellow" && color !== "green") {
-        return;
-      }
+    for (const element of document.getElementsByClassName("keyboard-button")) {
+        if (element.textContent.toLowerCase() === letter.toLowerCase()) {
+            
+            let oldColor = element.getAttribute('data-color');
+            
+            // Priority: green > yellow > grey
+            // If already green, never override
+            if (oldColor === 'green') {
+                return;
+            }
+            
+            // If already yellow, only override with green
+            if (oldColor === 'yellow' && color !== 'green') {
+                return;
+            }
+            
+            // If trying to set grey but already have yellow or green, skip
+            if (color === 'grey' && (oldColor === 'yellow' || oldColor === 'green')) {
+                return;
+            }
 
-      element.style.backgroundColor = color;
-      break;
+            // Apply new color and save status
+            element.style.backgroundColor = color;
+            element.setAttribute('data-color', color);
+            break;
+        }
     }
-  }
 }
 
 initBoard();
@@ -164,4 +181,31 @@ document.addEventListener("keyup", (e) => {
   } else {
     insertLetter(pressedKey);
   }
+});
+
+document.querySelectorAll(".keyboard-button").forEach(button => {
+  button.addEventListener("click", (e) => {
+    if (guessesRemaining === 0) {
+      return;
+    }
+
+    let pressedKey = e.target.textContent;
+
+    if (pressedKey === "Del" && nextLetter !== 0) {
+      deleteLetter();
+      return;
+    }
+
+    if (pressedKey === "Enter") {
+      checkGuess();
+      return;
+    }
+
+    let found = pressedKey.match(/[a-z]/gi);
+    if (!found || found.length > 1) {
+      return;
+    } else {
+      insertLetter(pressedKey);
+    }
+  });
 });
