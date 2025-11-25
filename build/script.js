@@ -165,7 +165,7 @@ function shadeKeyboard(letter, color) {
 
       // Apply new color and save status
       element.style.backgroundColor = color;
-      animateCSS(element,"bounceIn")
+      animateCSS(element, "bounceIn");
       element.setAttribute("data-color", color);
       break;
     }
@@ -206,7 +206,7 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
   }
   let key = target.textContent;
 
-  animateCSS(target,"bounceIn")
+  animateCSS(target, "bounceIn");
   if (key === "Del") {
     key = "Backspace";
   }
