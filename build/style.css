@@ -316,11 +316,11 @@ h1 {
   }
 
   #game-container {
-    max-height: none;
-    height: calc(100vh - 60px);
-    padding: 5px 5px 0 5px;
+    max-height: calc(100vh - 60px);
+    padding: 5px;
     width: 100%;
-    justify-content: space-between;
+    gap: 10px;
+    overflow-y: auto;
   }
 
   #gameBoard {
@@ -341,11 +341,9 @@ h1 {
     border: none;
     box-shadow: none;
     backdrop-filter: none;
-    padding: 10px 5px 15px 5px;
+    padding: 10px 5px;
     width: 100%;
     max-width: 100vw;
-    position: sticky;
-    bottom: 0;
     flex-shrink: 0;
   }
 
