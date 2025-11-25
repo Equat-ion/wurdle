@@ -7,7 +7,7 @@ let nextLetter = 0;
 
 let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
-
+console.log(rightGuessString)
 
 function initBoard() {
   let board = document.getElementById("gameBoard");
@@ -82,6 +82,7 @@ function checkGuess() {
       guessColors[i] = "green";
       rightGuess[i] = "#";
     }
+    shadeKeyboard(currentGuess[i], guessColors[i]);
   }
 
   // Second pass: Check for Yellow
@@ -95,6 +96,7 @@ function checkGuess() {
       guessColors[i] = "yellow";
       rightGuess[index] = "#";
     }
+    shadeKeyboard(currentGuess[i], guessColors[i]);
   }
 
   for (let i = 0; i < 5; i++) {
