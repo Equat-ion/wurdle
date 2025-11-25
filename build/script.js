@@ -206,6 +206,7 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
   }
   let key = target.textContent;
 
+  animateCSS(target,"bounceIn")
   if (key === "Del") {
     key = "Backspace";
   }
