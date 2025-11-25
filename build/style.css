@@ -1,56 +1,383 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ffd4b8 0%, #ffcab0 30%, #ffe4d6 70%, #ffd4b8 100%);
+  min-height: 100vh;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
 h1 {
-    text-align: center;
+  text-align: center;
+  color: #6b3410;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 3px;
+  flex-shrink: 0;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #F77F00;
+  border-radius: 50%;
+  margin-left: 2px;
+  vertical-align: baseline;
+  margin-bottom: -0.0375rem;
+}
+
+.by-text {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  margin-left: 4px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 15px 0 10px;
+  animation: bounce 1s ease-in-out;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 10px 10px 30px 10px;
+  width: 100%;
 }
 
 #gameBoard {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 6px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(107, 52, 16, 0.15);
+  flex-shrink: 0;
 }
 
 .letterBox {
-  border: 2px solid gray;
-  border-radius: 3px;
+  border: 3px solid rgba(107, 52, 16, 0.2);
+  border-radius: 12px;
   margin: 2px;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   height: 3rem;
   width: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   text-transform: uppercase;
+  background: #ffffff;
+  color: #6b3410;
+  box-shadow: 0 4px 12px rgba(107, 52, 16, 0.15);
+  filter: drop-shadow(0 2px 4px rgba(107, 52, 16, 0.1));
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.letterBox:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(107, 52, 16, 0.2);
+  filter: drop-shadow(0 4px 6px rgba(107, 52, 16, 0.15));
 }
 
 .filled-box {
-  border: 2px solid black;
+  border: 3px solid #ff9966;
+  background: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 153, 102, 0.4);
+  filter: drop-shadow(0 3px 5px rgba(255, 153, 102, 0.3));
 }
 
 .letterRow {
   display: flex;
+  gap: 2px;
 }
 
-
 #keyboard-cont {
-  margin: 1rem 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 6px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(107, 52, 16, 0.15);
+  flex-shrink: 0;
 }
 
 #keyboard-cont div {
   display: flex;
+  gap: 6px;
+}
+
+.first-row, .second-row, .third-row {
+  display: flex;
 }
 
 .second-row {
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 .keyboard-button {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  padding: 0.5rem;
-  margin: 0 2px;
+  padding: 14px 10px;
+  margin: 0;
   cursor: pointer;
   text-transform: uppercase;
+  min-width: 40px;
+  border: 3px solid rgba(107, 52, 16, 0.2);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #6b3410;
+  box-shadow: 0 4px 12px rgba(107, 52, 16, 0.15);
+  filter: drop-shadow(0 2px 4px rgba(107, 52, 16, 0.1));
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.keyboard-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(107, 52, 16, 0.2);
+  filter: drop-shadow(0 4px 6px rgba(107, 52, 16, 0.15));
+  background: #ffffff;
+  border-color: rgba(255, 153, 102, 0.5);
+}
+
+.keyboard-button:active {
+  transform: translateY(1px) scale(0.95);
+  box-shadow: 0 2px 6px rgba(107, 52, 16, 0.15);
+  filter: drop-shadow(0 1px 2px rgba(107, 52, 16, 0.1));
+  background: linear-gradient(145deg, #fff5ed, #ffffff);
+}
+
+.keyboard-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 153, 102, 0.4) 0%, rgba(255, 153, 102, 0) 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.keyboard-button:active::before {
+  width: 120px;
+  height: 120px;
+  opacity: 1;
+  transition: width 0s, height 0s, opacity 0s;
+}
+
+.keyboard-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(255, 153, 102, 0.2), rgba(255, 153, 102, 0));
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.keyboard-button:active::after {
+  opacity: 1;
+}
+
+/* Special styling for colored keyboard buttons */
+.keyboard-button[style*="background-color: green"],
+.keyboard-button[data-color="green"] {
+  background: linear-gradient(145deg, #6aaa64, #5a9a54) !important;
+  color: #ffffff !important;
+  border-color: rgba(106, 170, 100, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(106, 170, 100, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(106, 170, 100, 0.35)) !important;
+}
+
+.keyboard-button[style*="background-color: yellow"],
+.keyboard-button[data-color="yellow"] {
+  background: linear-gradient(145deg, #f3c237, #e5b429) !important;
+  color: #1f2937 !important;
+  border-color: rgba(243, 194, 55, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(243, 194, 55, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(243, 194, 55, 0.35)) !important;
+}
+
+.keyboard-button[style*="background-color: grey"],
+.keyboard-button[data-color="grey"] {
+  background: linear-gradient(145deg, #787c7e, #6a6d6f) !important;
+  color: #ffffff !important;
+  border-color: rgba(120, 124, 126, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(120, 124, 126, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(120, 124, 126, 0.35)) !important;
+}
+
+/* Gameboard tile colors - matching keyboard */
+.letterBox[style*="background-color: green"] {
+  background: linear-gradient(145deg, #6aaa64, #5a9a54) !important;
+  color: #ffffff !important;
+  border-color: rgba(106, 170, 100, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(106, 170, 100, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(106, 170, 100, 0.35)) !important;
+}
+
+.letterBox[style*="background-color: yellow"] {
+  background: linear-gradient(145deg, #f3c237, #e5b429) !important;
+  color: #1f2937 !important;
+  border-color: rgba(243, 194, 55, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(243, 194, 55, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(243, 194, 55, 0.35)) !important;
+}
+
+.letterBox[style*="background-color: grey"] {
+  background: linear-gradient(145deg, #787c7e, #6a6d6f) !important;
+  color: #ffffff !important;
+  border-color: rgba(120, 124, 126, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(120, 124, 126, 0.4) !important;
+  filter: drop-shadow(0 3px 5px rgba(120, 124, 126, 0.35)) !important;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .by-text,
+  .logo {
+    display: none;
+  }
+
+  .header-container {
+    margin: 10px 0 5px;
+  }
+
+  #game-container {
+    max-height: none;
+    height: calc(100vh - 60px);
+    padding: 5px 5px 0 5px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #gameBoard {
+    padding: 15px;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  
+  .letterBox {
+    height: 3rem;
+    width: 3rem;
+    font-size: 1.8rem;
+    margin: 2px;
+  }
+
+  #keyboard-cont {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 10px 5px 15px 5px;
+    width: 100%;
+    max-width: 100vw;
+    position: sticky;
+    bottom: 0;
+    flex-shrink: 0;
+  }
+
+  #keyboard-cont div {
+    gap: 4px;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .keyboard-button {
+    padding: 14px 0;
+    font-size: 0.85rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .first-row .keyboard-button {
+    max-width: 9%;
+  }
+
+  .second-row .keyboard-button {
+    max-width: 10%;
+  }
+
+  .third-row .keyboard-button {
+    max-width: 8.5%;
+  }
+
+  .third-row .keyboard-button:first-child,
+  .third-row .keyboard-button:last-child {
+    flex: 1.5;
+    max-width: 13%;
+    font-size: 0.7rem;
+  }
 }
