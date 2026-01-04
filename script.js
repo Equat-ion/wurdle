@@ -1,11 +1,30 @@
-import { WORDS } from "./words.js";
-
 const MAX_GUESSES = 6;
 let guessesRemaining = MAX_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
+let validWords = [];
+let rightGuessString = "";
 
-let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
+const loadWords = async () => {
+  try {
+    const response = await fetch("words.txt");
+    const text = await response.text();
+    validWords = text
+      .split("\n")
+      .map(w => w.trim())
+      .filter(w => w.length === 5 && /^[a-z]+$/.test(w));
+    
+    rightGuessString = validWords[Math.floor(Math.random() * validWords.length)];
+  } catch (error) {
+    console.error("Failed to load words:", error);
+    // Fallback words in case file fails to load
+    validWords = ["about", "above", "abuse", "actor", "acute", "admit", "adopt", "adult", "after", "again"];
+    rightGuessString = validWords[Math.floor(Math.random() * validWords.length)];
+  }
+};
+
+// Load words when the page loads
+loadWords();
 
 // console.log(rightGuessString);     -- my brother wrote this ❤️
 
@@ -87,7 +106,7 @@ function checkGuess() {
     return;
   }
 
-  if (!WORDS.includes(guessString)) {
+  if (!validWords.includes(guessString)) {
     toastr.error("Not a Word!");
     return;
   }
