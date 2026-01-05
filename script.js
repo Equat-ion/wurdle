@@ -5,6 +5,12 @@ let nextLetter = 0;
 let validWords = [];
 let rightGuessString = "";
 
+
+const EPOCH = new Date(Date.UTC(2026,0,1))
+
+
+
+
 const loadWords = async () => {
   try {
     const response = await fetch("words.txt");
