@@ -31,6 +31,6 @@ function generatePayload(cipherArray) {
 }
 
 const text = fs.readFileSync(absolutePath, "utf-8");
-console.log(text)
+let inputWords = text.match(/.*(?:\r?\n|$)/g)
 
 let payload = "";
