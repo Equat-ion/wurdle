@@ -4,24 +4,44 @@ let currentGuess = [];
 let nextLetter = 0;
 let validWords = [];
 let rightGuessString = "";
+const MS_PER_DAY = 86400000;
 
 const EPOCH = new Date(Date.UTC(2026, 0, 1));
 
+function daysSinceEpoch(epoch) {
+  const now = new Date();
+
+  const todayUTC = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate()
+  );
+
+  const epochUTC = Date.UTC(
+    epoch.getUTCFullYear(),
+    epoch.getUTCMonth(),
+    epoch.getUTCDate()
+  );
+
+  return Math.floor((todayUTC - epochUTC) / MS_PER_DAY);
+}
+
 const loadWords = async () => {
-  const response = await fetch("words.txt");
+  const response = await fetch("cipher.txt");
   const text = await response.text();
   validWords = text
     .split("\n")
     .map((w) => w.trim())
     .filter((w) => w.length === 5 && /^[a-z]+$/.test(w));
-
-  console.log(validWords);
+    rightGuessString = validWords[daysSinceEpoch(EPOCH)]
 };
 
 // Load words when the page loads
 loadWords();
 
-// console.log(rightGuessString);     -- my brother wrote this ❤️
+
+
+console.log(rightGuessString);     // my little brother wrote this ❤️
 
 const animateCSS = (element, animation, prefix = "animate__") =>
   new Promise((resolve, reject) => {
