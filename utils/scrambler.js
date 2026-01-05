@@ -19,23 +19,16 @@ if (!fpath) {
 const absolutePath = path.resolve(__dirname, fpath);
 
 function scramble(inputWords) {
-  for (let i = inputWords.length - 1; i>0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [inputWords[i],inputWords[j]]=[inputWords[j],inputWords[i]]
+  for (let i = inputWords.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [inputWords[i], inputWords[j]] = [inputWords[j], inputWords[i]];
   }
 
   return inputWords;
 }
 
-function generatePayload(cipherArray) {
-  let payload = "";
-
-  return payload;
-}
 
 const text = fs.readFileSync(absolutePath, "utf-8");
-let inputWords = text.match(/.+(?:\r?\n|$)/g)
-
-
+let inputWords = text.match(/.+(?:\r?\n|$)/g);
 
 let payload = "";
