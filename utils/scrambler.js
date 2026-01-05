@@ -3,6 +3,10 @@
 // not meant to be ran by the browser or during runtime
 // this is a utility to create scramble on first run
 
+
+// run this when cwd in /utils and words.txt is in root
+// move cipher.txt to root afterwards
+
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -28,7 +32,11 @@ function scramble(inputWords) {
 }
 
 
-const text = fs.readFileSync(absolutePath, "utf-8");
-let inputWords = text.match(/.+(?:\r?\n|$)/g);
 
-let payload = "";
+const text = fs.readFileSync(absolutePath, "utf-8");
+let wordArray = text.match(/.+(?:\r?\n|$)/g);
+
+let payloadArray = scramble(wordArray)
+let payload = payloadArray.join("")
+
+fs.writeFileSync(`cipher.txt`, payload, `utf-8`)
