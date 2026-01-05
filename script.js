@@ -33,15 +33,13 @@ const loadWords = async () => {
     .split("\n")
     .map((w) => w.trim())
     .filter((w) => w.length === 5 && /^[a-z]+$/.test(w));
-    rightGuessString = validWords[daysSinceEpoch(EPOCH)]
+  rightGuessString = validWords[daysSinceEpoch(EPOCH)];
 };
 
 // Load words when the page loads
 loadWords();
 
-
-
-console.log(rightGuessString);     // my little brother wrote this ❤️
+// console.log(rightGuessString); // my little brother wrote this ❤️
 
 const animateCSS = (element, animation, prefix = "animate__") =>
   new Promise((resolve, reject) => {
