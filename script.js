@@ -5,28 +5,17 @@ let nextLetter = 0;
 let validWords = [];
 let rightGuessString = "";
 
-
-const EPOCH = new Date(Date.UTC(2026,0,1))
-
-
-
+const EPOCH = new Date(Date.UTC(2026, 0, 1));
 
 const loadWords = async () => {
-  try {
-    const response = await fetch("words.txt");
-    const text = await response.text();
-    validWords = text
-      .split("\n")
-      .map(w => w.trim())
-      .filter(w => w.length === 5 && /^[a-z]+$/.test(w));
-    
-    rightGuessString = validWords[Math.floor(Math.random() * validWords.length)];
-  } catch (error) {
-    console.error("Failed to load words:", error);
-    // Fallback words in case file fails to load
-    validWords = ["about", "above", "abuse", "actor", "acute", "admit", "adopt", "adult", "after", "again"];
-    rightGuessString = validWords[Math.floor(Math.random() * validWords.length)];
-  }
+  const response = await fetch("words.txt");
+  const text = await response.text();
+  validWords = text
+    .split("\n")
+    .map((w) => w.trim())
+    .filter((w) => w.length === 5 && /^[a-z]+$/.test(w));
+
+  console.log(validWords);
 };
 
 // Load words when the page loads
