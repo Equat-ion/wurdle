@@ -39,6 +39,7 @@ const loadWords = async () => {
 // Load words when the page loads
 loadWords();
 
+window.iAmAScaredyLittleCatAndIFeelBadAboutWhatIAmAboutToDo = () => rightGuessString + " : i hope you are feeling bad."
 // console.log(rightGuessString); // my little brother wrote this ❤️
 
 const animateCSS = (element, animation, prefix = "animate__") =>
